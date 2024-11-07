@@ -14,7 +14,7 @@ public class TicTacToe {
         char winner = '-';
         printBoard();
 
-        for(int placed=0; placed<9 && winner == '-'; placed++) {
+        for(int placed = 0; placed < 9 && winner == '-'; placed++) {
             System.out.printf("It is %c's turn%n", turn);
             System.out.print("Enter row for move (1-3): ");
             int r = in.nextInt() - 1;
@@ -22,6 +22,17 @@ public class TicTacToe {
             int c = in.nextInt() - 1;
 
              // challenge: prevent the turn from advancing if the user entered bad coordinates
+
+             if (r < 0 || r >= 3)
+             {
+                System.out.printf("%s is not a valid choice. Try again.%n", r+1);
+                continue;
+             }
+             else if (c < 0 || c >= 3)
+             {
+                System.out.printf("%s is not a valid choice. Try again.%n", c+1);
+                continue;
+             }
 
 
             board[r][c] = turn;
@@ -38,32 +49,51 @@ public class TicTacToe {
 
     public static void printBoard() {
         System.out.print("  1 2 3\n  -----\n");
-        for(int r=0; r<3; r++) {
+        for(int r = 0; r < 3; r++) {
             System.out.print(r+1+" ");
-            for(int c=0; c<3; c++) {
+            for(int c = 0; c < 3; c++) {
                 System.out.print(board[r][c]);
-                if (c<2) System.out.print('|');
+                if (c < 2) System.out.print('|');
             }
             System.out.print("\n  -----\n");
         }
     }
 
     public static char findWinner() {
-        for(int r=0; r<3; r++) {
+        for(int r = 0; r < 3; r++) {
             // three-in-a-row horizontally
-            if(board[r][0] != '.' && board[r][0] == board[r][1] && board[r][1] == board[r][2]) {
+            if(board[r][0] != '.' && 
+            board[r][0] == board[r][1] && 
+            board[r][1] == board[r][2]) 
+            {
                 return board[r][0];
             }
         }
 
         // TODO: three-in-a-row vertically 
+        for(int c = 0; c < 3; c++) {
+            // three-in-a-row vertically
+            if(board[0][c] != '.' && board[0][c] == board[1][c] && board[1][c] == board[2][c]) 
+            {
+                return board[0][c];
+            }
+        }
 
         // diagonals
-        if(board[0][0] != '.' && board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
+        if(board[0][0] != '.' && 
+        board[0][0] == board[1][1] && 
+        board[1][1] == board[2][2]) 
+        {
             return board[0][0];
         }
         // TODO: check other diagonal
-            
+        
+        if(board[0][2] != '.' && 
+        board[0][2] == board[1][1] && 
+        board[0][2] == board[2][0])
+        {
+            return board[0][2];
+        }
         return '-';
     }
 }
